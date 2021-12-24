@@ -1,0 +1,205 @@
+﻿@model DemoWeb.Models.tbl_TaiKhoan
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Đăng nhập</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/Content/login/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Content/login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/login/css/main.css">
+    <!--===============================================================================================-->
+</head>
+@using (Html.BeginForm("Index", "Login", FormMethod.Post,
+                             new { enctype = "multipart/form-data" }))
+{
+    <body>
+
+        <div class="limiter">
+            <div class="container-login100" style="background-image: url('../../Content/login/images/bg-01.jpg');">
+                <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+
+                    <form class="login100-form validate-form">
+                        <span class="login100-form-title p-b-49" style="font-family: auto;">
+                            Đăng nhập hệ thống
+                        </span>
+
+                        <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
+                            <span class="label-input100">Tên đăng nhập</span>
+                            @*<input id="txtUserName" class="input100" type="text" name="username" placeholder="Nhập tên người dùng của bạn">*@
+                            @Html.TextBoxFor(model => model.TEN_TAIKHOAN, new { @class = "input100", placeholder = "Nhập tên người dùng của bạn" })
+                            <span class="focus-input100" data-symbol="&#xf206;"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input" data-validate="Password is required">
+                            <span class="label-input100">Mật khẩu</span>
+                            @*<input id="txtPassword" class="input100" type="password" name="pass" placeholder="Nhập mật khẩu của bạn">*@
+                            @Html.TextBoxFor(model => model.MAT_KHAU, new { @class = "input100", placeholder = "Nhập mật khẩu của bạn", @type = "password" })
+                            <span class="focus-input100" data-symbol="&#xf190;"></span>
+                        </div>
+
+                        <div class="text-right p-t-8 p-b-31">
+                            <a href="#">
+                                Quên mật khẩu?
+                            </a>
+                        </div>
+
+                        <div class="container-login100-form-btn">
+                            <div class="wrap-login100-form-btn">
+                                <div class="login100-form-bgbtn"></div>
+                                <button onclick="Login" class="login100-form-btn">
+                                    Đăng nhập
+                                </button>
+                            </div>
+                            @Html.ValidationSummary(true, "", new { @class = "alert-danger", @role = "alert", @style = "text-align:center" })
+                        </div>
+
+                        <div class="txt1 text-center p-t-54 p-b-20">
+                            <span>
+                                Đăng nhập bằng cách khác
+                            </span>
+                        </div>
+
+                        <div class="flex-c-m">
+
+                            <a href="#" class="login100-social-item bg1" onclick="location.href='@Url.Action("Facebook", "Login")'">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+
+                            <a href="#" class="login100-social-item bg2">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+
+                            <a href="" id="googleplus" class="login100-social-item bg3">
+                                <i class="fa fa-google" id="googleplus"></i>
+                            </a>
+
+
+                            @*<button id="googleplus" class="login100-social-item bg3" data-toggle="tooltip" title="Login with Google">
+                                    <i aria-hidden="true" class="fa fa-google" id="googleplus"></i>
+                                </button>*@
+                        </div>
+
+                        <div class="flex-col-c p-t-155">
+                            <span class="txt1 p-b-17">
+                                Bạn chưa có tài khoản?
+                            </span>
+
+                            <a href="#" class="txt2">
+                                Đăng ký
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div id="dropDownSelect1"></div>
+
+        <!--===============================================================================================-->
+        <script src="~/Content/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/Content/login/vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/Content/login/vendor/bootstrap/js/popper.js"></script>
+        <script src="~/Content/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/Content/login/vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/Content/login/vendor/daterangepicker/moment.min.js"></script>
+        <script src="~/Content/login/vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/Content/login/vendor/countdowntime/countdowntime.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/Content/login/js/main.js"></script>
+      
+        <!-- API Google -->
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+        <script src="https://apis.google.com/js/api:client.js"></script>
+
+        <script>
+        var googleUser = {};
+        var startAppA = function () {
+            gapi.load('auth2', function () {
+                //Retrieve the singleton for the GoogleAuth library and set up the client.
+                auth2 = gapi.auth2.init({
+                    client_id: '61181844981-ap7hf8j6ka9nsi55efcv6vq43fl22rnp.apps.googleusercontent.com',
+                    secret_key: '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',
+                    cookiepolicy: 'single_host_origin',
+                });
+                attachSignin(document.getElementById('googleplus'));
+            });
+        };
+
+        function attachSignin(element) {
+            auth2.attachClickHandler(element, {},
+                function (googleUser) {
+                    //debugger;
+                    $(".login100-social-item bg3").show();
+                    console.log(googleUser);
+                    var profiles = googleUser.getBasicProfile();
+                    var ReturnUrl = 'https://localhost:44320/Login/ReturnURL';
+                    alert("X");
+                    var objData = {
+                        Email: profiles.getEmail(),
+                        LastName: profiles.getFamilyName(),
+                        FirstName: profiles.getGivenName(),
+                        GoogleID: profiles.getId(),
+                        ProfileURL: profiles.getName(),
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("ReturnURL", "Login")',
+                        contentType: "application/json; charset=utf-8",
+                        data: objData,
+                        datatype: 'JSON',
+                        success: function (data) {
+                            alert("Successfully Done");
+                            window.location.href = "/Home/Index";
+                        },
+                        error: function (err, result) {
+                            alert('error');
+                        }
+                    });
+                    $(".login100-social-item bg3").hide();
+
+                }, function (error) {
+                    alert("yyy");
+                    //alert(JSON.stringify(error,, 2));
+                });
+        }
+        </script>
+        <script>
+            startAppA();
+        </script>
+    </body>
+}
+</html>
+
