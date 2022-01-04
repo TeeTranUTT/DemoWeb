@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Facebook";
+}
+
+<div>
+    @Html.ActionLink("Login with facebook", "Facebook", "Home")
+    <table>
+        <tr><td>Email:</td><td><b>@TempData["email"]</b></td></tr>
+
+        <tr><td>First Name:</td><td><b>@TempData["first_name"]</b></td></tr>
+
+        <tr><td>Last Name</td><td><b>@TempData["last_name"]</b></td></tr>
+
+        <tr><td>Picture:</td><td><b>@TempData["picture"]</b></td></tr>
+    </table>
+</div>
+
+

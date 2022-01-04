@@ -2,11 +2,59 @@
     ViewBag.Title = "Home Page";
 }
 @{
-    var Ten_DangNhap = (DemoWeb.Models.tbl_TaiKhoan)Session["UserLogin"];
+    var user = (DemoWeb.Models.tbl_TaiKhoan)Session["UserLogin"];
 }
-<div class="jumbotron">
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+window.onload = function () {
 
-    <h2>Xin chào: @Ten_DangNhap.TEN_DANGNHAP</h2>
-    <a href="@Url.Action("Logout","Login")" class="btn btn-success">Đăng xuất</a>
-</div>
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title: {
+		text: "BIEU ĐO THU THAP DU LIEU"
+	},
+	toolTip: {
+		shared: true
+	},
+	data: [{
+		type: "line",
+        name: "Mặt Trời",
+		showInLegend: true,
+		dataPoints: @Html.Raw(ViewBag.DataPoints1)
+	}, {
+		type: "line",
+		name: "Gió",
+		showInLegend: true,
+		dataPoints: @Html.Raw(ViewBag.DataPoints2)
+	}, {
+		type: "line",
+        name: "Sinh Khối",
+		showInLegend: true,
+		dataPoints: @Html.Raw(ViewBag.DataPoints3)
+	}, {
+		type: "line",
+        name: "Tổng",
+		showInLegend: true,
+		dataPoints: @Html.Raw(ViewBag.DataPoints4)
+	}]
+});
+chart.render();
+
+}
+    </script>
+</head>
+<body>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <div class="jumbotron">
+
+        <h2>Xin chào:@user.TEN_DANGNHAP @TempData["First_Name"] @TempData["Last_Name"]</h2>
+        <a href="@Url.Action("Logout","Login")" class="btn btn-success">Đăng xuất</a>
+        <input id="btnLogoff" type="button" class="btn btn-success" value="Log Off" />
+    </div>
+</body>
+</html>
+
 

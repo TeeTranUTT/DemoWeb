@@ -35,12 +35,12 @@
 @using (Html.BeginForm("Index", "Login", FormMethod.Post,
                              new { enctype = "multipart/form-data" }))
 {
-    <body>
+<body>
 
-        <div class="limiter">
-            <div class="container-login100" style="background-image: url('../../Content/login/images/bg-01.jpg');">
-                <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('../../Content/login/images/bg-01.jpg');">
+            <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                <authentication>
                     <form class="login100-form validate-form">
                         <span class="login100-form-title p-b-49" style="font-family: auto;">
                             Đăng nhập hệ thống
@@ -49,19 +49,19 @@
                         <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
                             <span class="label-input100">Tên đăng nhập</span>
                             @*<input id="txtUserName" class="input100" type="text" name="username" placeholder="Nhập tên người dùng của bạn">*@
-                            @Html.TextBoxFor(model => model.TEN_TAIKHOAN, new { @class = "input100", placeholder = "Nhập tên người dùng của bạn" })
+                            @Html.TextBoxFor(model => model.TEN_TAIKHOAN, new {@id= "username", @class = "input100", placeholder = "Nhập tên người dùng của bạn" })
                             <span class="focus-input100" data-symbol="&#xf206;"></span>
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate="Password is required">
                             <span class="label-input100">Mật khẩu</span>
                             @*<input id="txtPassword" class="input100" type="password" name="pass" placeholder="Nhập mật khẩu của bạn">*@
-                            @Html.TextBoxFor(model => model.MAT_KHAU, new { @class = "input100", placeholder = "Nhập mật khẩu của bạn", @type = "password" })
+                            @Html.TextBoxFor(model => model.MAT_KHAU, new { @id = "password", @class = "input100", placeholder = "Nhập mật khẩu của bạn", @type = "password" })
                             <span class="focus-input100" data-symbol="&#xf190;"></span>
                         </div>
 
                         <div class="text-right p-t-8 p-b-31">
-                            <a href="#">
+                            <a href="#" id="to-recover">
                                 Quên mật khẩu?
                             </a>
                         </div>
@@ -69,7 +69,7 @@
                         <div class="container-login100-form-btn">
                             <div class="wrap-login100-form-btn">
                                 <div class="login100-form-bgbtn"></div>
-                                <button onclick="Login" class="login100-form-btn">
+                                <button class="login100-form-btn" type="submit">
                                     Đăng nhập
                                 </button>
                             </div>
@@ -84,7 +84,7 @@
 
                         <div class="flex-c-m">
 
-                            <a href="#" class="login100-social-item bg1" onclick="location.href='@Url.Action("Facebook", "Login")'">
+                            <a href="#" data-toggle="tooltip" class="login100-social-item bg1" onclick="location.href='@Url.Action("Facebook", "Login")'">
                                 <i class="fa fa-facebook"></i>
                             </a>
 
@@ -92,14 +92,14 @@
                                 <i class="fa fa-twitter"></i>
                             </a>
 
-                            <a href="" id="googleplus" class="login100-social-item bg3">
-                                <i class="fa fa-google" id="googleplus"></i>
-                            </a>
+                            @*<a href="" onclick="startAppA()" id="googleplus" class="login100-social-item bg3">
+                    <i class="fa fa-google" id="googleplus"></i>
+                </a>*@
 
 
-                            @*<button id="googleplus" class="login100-social-item bg3" data-toggle="tooltip" title="Login with Google">
-                                    <i aria-hidden="true" class="fa fa-google" id="googleplus"></i>
-                                </button>*@
+                            <button id="googleplus" class="login100-social-item bg3" data-toggle="tooltip" title="Login with Google">
+                                <i aria-hidden="true" class="fa fa-google" id="googleplus"></i>
+                            </button>
                         </div>
 
                         <div class="flex-col-c p-t-155">
@@ -107,50 +107,80 @@
                                 Bạn chưa có tài khoản?
                             </span>
 
-                            <a href="https://localhost:44320/Login/Register" class="txt2">
+                            <a href="/Login/Register" class="txt2">
                                 Đăng ký
                             </a>
                         </div>
                     </form>
-                </div>
-
-
+                </authentication>               
             </div>
         </div>
+    </div>
 
 
-        <div id="dropDownSelect1"></div>
+    <div id="dropDownSelect1"></div>
 
-        <!--===============================================================================================-->
-        <script src="~/Content/login/vendor/jquery/jquery-3.2.1.min.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/Content/login/vendor/animsition/js/animsition.min.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/Content/login/vendor/bootstrap/js/popper.js"></script>
-        <script src="~/Content/login/vendor/bootstrap/js/bootstrap.min.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/Content/login/vendor/select2/select2.min.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/Content/login/vendor/daterangepicker/moment.min.js"></script>
-        <script src="~/Content/login/vendor/daterangepicker/daterangepicker.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/Content/login/vendor/countdowntime/countdowntime.js"></script>
-        <!--===============================================================================================-->
-        <script src="~/Content/login/js/main.js"></script>
-      
-        <!-- API Google -->
+    <!--===============================================================================================-->
+    <script src="~/Content/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/login/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/login/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/Content/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/login/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/login/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/Content/login/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/login/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Content/login/js/main.js"></script>
+    <!--Thong bao loi khong nhap du lieu-->
+    <script type="text/javascript">
+        function auth(event) {
+            event.preventDefault();
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
 
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
-        <script src="https://apis.google.com/js/api:client.js"></script>
+            if (username.length === 0 || password.length === 0) {
+                alert("Tên tài khoản và mật khẩu không được để trống!");
+                return false;
+            } else {
+                alert("Vui lòng nhập thông tin hợp lệ");
+                return;
+            }
+        }
+    </script>
+    <!--Custom JavaScript -->
+    <script type="text/javascript">
+        $(function () {
+            $(".preloader").fadeOut();
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        // ==============================================================
+        // Login and Recover Password
+        // ==============================================================
+        $('#to-recover').on("click", function () {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });</script>
+    <!-- API Google -->
 
-        <script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+    <script src="https://apis.google.com/js/api:client.js"></script>
+
+    <script>
+
         var googleUser = {};
         var startAppA = function () {
             gapi.load('auth2', function () {
                 //Retrieve the singleton for the GoogleAuth library and set up the client.
                 auth2 = gapi.auth2.init({
-                    client_id: '61181844981-ap7hf8j6ka9nsi55efcv6vq43fl22rnp.apps.googleusercontent.com',
-                    secret_key: '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',
+                    client_id: '872225036100-9l4rmtci6rgu4uflq4eh2i1u0loceest.apps.googleusercontent.com',
+                    secret_key: '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',
                     cookiepolicy: 'single_host_origin',
                 });
                 attachSignin(document.getElementById('googleplus'));
@@ -161,7 +191,7 @@
             auth2.attachClickHandler(element, {},
                 function (googleUser) {
                     //debugger;
-                    $(".login100-social-item bg3").show();
+                    $(".se-pre-con").show();
                     console.log(googleUser);
                     var profiles = googleUser.getBasicProfile();
                     var ReturnUrl = 'https://localhost:44320/Login/ReturnURL';
@@ -188,18 +218,18 @@
                             alert('error');
                         }
                     });
-                    $(".login100-social-item bg3").hide();
+                    $(".se-pre-con").hide();
 
                 }, function (error) {
                     alert("yyy");
                     //alert(JSON.stringify(error,, 2));
                 });
         }
-        </script>
-        <script>
-            startAppA();
-        </script>
-    </body>
+    </script>
+    <script>
+        startAppA();
+    </script>
+</body>
 }
 </html>
 

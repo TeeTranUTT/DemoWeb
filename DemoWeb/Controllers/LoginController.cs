@@ -5,7 +5,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DemoWeb.Models;
+using Facebook;
 
 namespace DemoWeb.Controllers
 {
@@ -14,8 +16,7 @@ namespace DemoWeb.Controllers
         // GET: Login
         #region Variable
         WebDBContext db = new WebDBContext();
-        #endregion
-        [AllowAnonymous]
+        #endregion       
         [HttpGet]
         public ActionResult Index()
         {
@@ -55,6 +56,7 @@ namespace DemoWeb.Controllers
                 return View();
             }
         }
+
         [HttpPost]
         public JsonResult ReturnURL(string Email, string FirstName, string LastName, string GoogleID, string ProfileURL)
         {         
@@ -67,7 +69,6 @@ namespace DemoWeb.Controllers
             return View();
         }
         [HttpPost]
-
         public ActionResult Register(tbl_TaiKhoan taiKhoan)
         {
             if (ModelState.IsValid)
@@ -95,6 +96,7 @@ namespace DemoWeb.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index","Login");
         }
         //Mã hóa mật khẩu bằng MD5
@@ -109,6 +111,56 @@ namespace DemoWeb.Controllers
                 byte2String += targetData[i].ToString("x2");
             }
             return byte2String;
+        }
+        //login facebook
+        private Uri RediredtUri
+        {
+            get
+            {
+                var uriBuilder = new UriBuilder(Request.Url);
+                uriBuilder.Query = null;
+                uriBuilder.Fragment = null;
+                uriBuilder.Path = Url.Action("FacebookCallback");
+                return uriBuilder.Uri;
+            }
+        }
+        [AllowAnonymous]
+        public ActionResult Facebook()
+        {
+            var fb = new FacebookClient();
+            var loginUrl = fb.GetLoginUrl(new
+            {
+                client_id = "1885657841637327",
+                client_secret = "a6af87a2d66a02c302879136245618ad",
+                redirect_uri = RediredtUri.AbsoluteUri,
+                response_type = "code",
+                scope = "email"
+            });
+            return Redirect(loginUrl.AbsoluteUri);
+        }
+        public ActionResult FacebookCallback(string code)
+        {
+            var fb = new FacebookClient();
+            dynamic result = fb.Post("oauth/access_token", new
+            {
+                client_id = "1885657841637327",
+                client_secret = "a6af87a2d66a02c302879136245618ad",
+                redirect_uri = RediredtUri.AbsoluteUri,
+                code = code
+            });
+
+            var accessToken = result.access_token;
+            Session["AccessToken"] = accessToken;
+            fb.AccessToken = accessToken;
+            dynamic me = fb.Get("me?fields=link,first_name,currency,last_name,email,gender,locale,timezone,verified,picture,age_range");
+            string email = me.email;
+
+            TempData["email"] = me.email;
+            TempData["first_name"] = me.first_name;
+            TempData["last_name"] = me.last_name;
+            TempData["picture"] = me.picture;
+            FormsAuthentication.SetAuthCookie(email, false);
+            return RedirectToAction("Index", "Home");
         }
     }
 }
