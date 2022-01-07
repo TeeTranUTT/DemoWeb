@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using DemoWeb.Models;
 using Facebook;
+using System.Web.Security;
 
 namespace DemoWeb.Controllers
 {
@@ -16,24 +17,25 @@ namespace DemoWeb.Controllers
         // GET: Login
         #region Variable
         WebDBContext db = new WebDBContext();
-        #endregion       
-        [HttpGet]
+        #endregion    
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Index(tbl_TaiKhoan model, FormCollection collection)
         {
             var tentaikhoan = model.TEN_TAIKHOAN;
-            var matkhau = GetMD5(model.MAT_KHAU);         
+            var matkhau =GetMD5(model.MAT_KHAU);         
             var item = db.tbl_TaiKhoan.Where(x => x.TEN_TAIKHOAN == tentaikhoan && x.MAT_KHAU == matkhau && x.TRANG_THAI == 1).FirstOrDefault();
-
             if (item != null)
             {
                 Session["UserLogin"] = item;
                 if (item.NGAY_HIEULUC < DateTime.Now)
                 {
+                    FormsAuthentication.SetAuthCookie(model.TEN_TAIKHOAN, false);
                     return RedirectToAction("Index", "Home");
                 }
                 else

@@ -50,9 +50,8 @@ chart.render();
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <div class="jumbotron">
 
-        <h2>Xin chào:@user.TEN_DANGNHAP @TempData["First_Name"] @TempData["Last_Name"]</h2>
+        <h2>Xin chào:@user.TEN_DANGNHAP @*@TempData["First_Name"] @TempData["Last_Name"]*@</h2>
         <a href="@Url.Action("Logout","Login")" class="btn btn-success">Đăng xuất</a>
-        <input id="btnLogoff" type="button" class="btn btn-success" value="Log Off" />
     </div>
 </body>
 </html>

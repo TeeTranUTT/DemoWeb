@@ -8,15 +8,15 @@ using System.Web.Mvc;
 
 namespace DemoWeb.Controllers
 {
-    public class HomeController : Controller
+	public class HomeController : Controller
     {
 		#region Variable
 		WebDBContext db = new WebDBContext();
-		#endregion
-		// GET: Home
+        #endregion
+        // GET: Home
+        [Authorize]
 		public ActionResult Index()
         {
-
 			List<DataPoint> dataPoints1 = new List<DataPoint>();
 			List<DataPoint> dataPoints2 = new List<DataPoint>();
 			List<DataPoint> dataPoints3 = new List<DataPoint>();
